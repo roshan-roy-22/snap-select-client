@@ -132,6 +132,7 @@ const ApplyPhotographer = () => {
           dispatch(showLoading());
           const response = await applyVendorAPI(reqBody, reqHeader);
           if (response.data.success) {
+          dispatch(hideLoading());
             toast.success(response.data.message); // Fixed typo here
             navigate("/");
           } else {

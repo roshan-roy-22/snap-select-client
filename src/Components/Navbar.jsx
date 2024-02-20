@@ -49,18 +49,20 @@ const Navbar = () => {
   ]
 
   const menuTobeRendered =user?.isAdmin ? adminMenu: userMenu
-console.log(user);
+// console.log(user);
   return (
     <>
-      <div className="flex justify-between items-center py-4 px-10 border-b-2">
+      <div className="flex justify-between items-center py-4 px-10 border-b-2 bg-white">
         <a className="flex items-center">
           <img width={"45px"} src={logo} alt="" />{" "}
           <span className="font-bold text-xl">SNAP SELECT</span>
         </a>
         <div className="flex items-center gap-8">
-          <Badge badgeContent={user?.unseenNotification.length} color="error">
-            <NotificationsNoneIcon />
-          </Badge>
+          <div className="cursor-pointer" onClick={()=>navigate('/notifications')}>
+            <Badge  badgeContent={user?.unseenNotification.length} color="error">
+              <NotificationsNoneIcon />
+            </Badge>
+          </div>
           <div>
               <Button
                 id="demo-positioned-button"

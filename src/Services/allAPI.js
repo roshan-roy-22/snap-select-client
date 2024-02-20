@@ -40,3 +40,11 @@ export const userinfoAPI = async (reqHeader) => {
 export const applyVendorAPI = async (reqBody, reqHeader) => {
     return await commonAPI("POST", `${SERVER_URL}/apply-vendor`, reqBody, reqHeader);
 }
+
+export const markNotificationAPI = async (reqHeader)=>{
+    return await commonAPI("POST",`${SERVER_URL}/setseen-notification`,"",reqHeader)
+}
+
+export const deleteNotificationAPI = async (reqHeader)=>{
+    return await commonAPI("POST",`${SERVER_URL}/delete-notification`,"",reqHeader)
+}
