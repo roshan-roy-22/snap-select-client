@@ -72,7 +72,7 @@ const ApplyPhotographer = () => {
     photos: [],
   };
   const [userData, setUserData] = useState(data);
-
+// setPersonName("Portrait")
   const handleChange = (event) => {
     const {
       target: { value },

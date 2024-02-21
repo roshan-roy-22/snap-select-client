@@ -37,18 +37,37 @@ const Navbar = () => {
     },
   ]
 
-  const adminMenu =[
+  const vendorMenu=[
     {
-      name:'Users',
-      path:'/users'
+      name:'Home',
+      path:'/'
     },
     {
-      name:'Photographers',
-      path:'/photographers'
+      name:'Bookings',
+      path:'/bookings'
+    },
+    {
+      name:'Profile',
+      path:`/profile/${user?._id}`
     },
   ]
 
-  const menuTobeRendered =user?.isAdmin ? adminMenu: userMenu
+  const adminMenu =[
+    {
+      name:'Home',
+      path:'/'
+    },
+    {
+      name:'Users',
+      path:'/admin-userlist'
+    },
+    {
+      name:'Photographers',
+      path:'/admin-photographerlist'
+    },
+  ]
+
+  const menuTobeRendered =user?.isAdmin ? adminMenu: user?.isVendor ? vendorMenu :userMenu
 // console.log(user);
   return (
     <>

@@ -26,9 +26,7 @@ const ProtectedRoute = (props) => {
       dispatch(showLoading());
       const result = await userinfoAPI(reqHeader);
       dispatch(hideLoading());
-      console.log(result.data.success);
       if (result.data.success) {
-        console.log("hello ji");
         dispatch(setUser(result.data.data));
       } else {
           localStorage.clear();
