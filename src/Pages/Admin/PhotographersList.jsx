@@ -110,9 +110,9 @@ const PhotographersList = () => {
 
   console.log(userData);
   return (
-    <>
+    <div  className="bg-[#F8F9FA] pb-6">
       <Navbar />
-      <div className="grid grid-cols-6">
+      <div className="grid grid-cols-6 h-[90vh]">
         <div></div>
         <div className="col-span-4">
           <h1 className="text-3xl font-medium m-3">Vendor's list</h1>
@@ -162,11 +162,6 @@ const PhotographersList = () => {
                 ))}
               </TableBody>
             </Table>
-
-                        <div>
-                          {/* <img src={`${SERVER_URL}/uploads/${itemData.photos.filename[0]}`} alt="" /> */}
-                        </div>
-
           </TableContainer>
         </div>
         <div>
@@ -190,7 +185,7 @@ const PhotographersList = () => {
       </Modal>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

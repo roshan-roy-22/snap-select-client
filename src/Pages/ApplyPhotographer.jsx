@@ -159,7 +159,7 @@ const ApplyPhotographer = () => {
   };
 
   return (
-    <>
+    <div  className="bg-[#F8F9FA] pb-3">
       <Navbar />
       <div className="my-6">
         <h1 className="text-4xl my-12 ms-10">
@@ -298,7 +298,7 @@ const ApplyPhotographer = () => {
         </div>
         <ToastContainer autoClose={2000} position="top-center" />
       </div>
-    </>
+    </div>
   );
 };
 

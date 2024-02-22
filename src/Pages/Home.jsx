@@ -38,7 +38,7 @@ const Home = () => {
   
 
   return (
-    <div div className="bg-[#F8F9FA]">
+    <div  className="bg-[#F8F9FA] pb-3">
       <Navbar />
 
       <div className="my-8 px-5 ">

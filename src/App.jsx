@@ -13,6 +13,10 @@ import UserList from "./Pages/Admin/UserList";
 import PhotographersList from "./Pages/Admin/PhotographersList";
 import Profile from "./Pages/Photographers/Profile";
 import ViewVendor from "./Pages/ViewVendor";
+import Bookings from "./Pages/Bookings";
+import VendorBookings from "./Pages/VendorBookings";
+import Footer from "./Components/Footer";
+import Landing from "./Pages/Landing";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -34,6 +38,9 @@ function App() {
         </div>
       )}
       <Routes>
+        <Route path="/home" element={<PublicRoute>
+          <Landing/>
+        </PublicRoute>} />
         <Route
           path="/login"
           element={
@@ -55,6 +62,7 @@ function App() {
           element={
             <ProtectedRoute>
               <Home />
+              <Footer/>
             </ProtectedRoute>
           }
         />
@@ -63,6 +71,7 @@ function App() {
           element={
             <ProtectedRoute>
               <ApplyPhotographer />
+              <Footer/>
             </ProtectedRoute>
           }
         />
@@ -71,6 +80,7 @@ function App() {
           element={
             <ProtectedRoute>
               <Notification/>
+              <Footer/>
             </ProtectedRoute>
           }
         />
@@ -79,6 +89,7 @@ function App() {
           element={
             <ProtectedRoute>
               <UserList/>
+              <Footer/>
             </ProtectedRoute>
           }
         />
@@ -87,6 +98,7 @@ function App() {
           element={
             <ProtectedRoute>
               <PhotographersList/>
+              <Footer/>
             </ProtectedRoute>
           }
         />
@@ -95,6 +107,7 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile/>
+              <Footer/>
             </ProtectedRoute>
           }
         />
@@ -103,6 +116,25 @@ function App() {
           element={
             <ProtectedRoute>
               <ViewVendor/>
+              <Footer/>
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/bookings"
+          element={
+            <ProtectedRoute>
+              <Bookings/>
+              <Footer/>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/vendor/bookings"
+          element={
+            <ProtectedRoute>
+              <VendorBookings/>
+              <Footer/>
             </ProtectedRoute>
           }
         />

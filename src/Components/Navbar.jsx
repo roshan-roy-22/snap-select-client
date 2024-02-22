@@ -44,7 +44,7 @@ const Navbar = () => {
     },
     {
       name:'Bookings',
-      path:'/bookings'
+      path:'/vendor/bookings'
     },
     {
       name:'Profile',
@@ -72,7 +72,7 @@ const Navbar = () => {
   return (
     <>
       <div className="flex justify-between items-center py-4 px-10 border-b-2 bg-white">
-        <a className="flex items-center">
+        <a onClick={()=>navigate('/')} className="flex items-center">
           <img width={"45px"} src={logo} alt="" />{" "}
           <span className="font-bold text-xl">SNAP SELECT</span>
         </a>
@@ -83,7 +83,7 @@ const Navbar = () => {
             </Badge>
           </div>
           <div>
-              <Button
+              <button className="font-bold text-blue-600"
                 id="demo-positioned-button"
                 aria-controls={open ? "demo-positioned-menu" : undefined}
                 aria-haspopup="true"
@@ -91,7 +91,7 @@ const Navbar = () => {
                 onClick={handleClick}
               >
                 {user?.username}
-              </Button>
+              </button>
               <Menu
                 id="demo-positioned-menu"
                 aria-labelledby="demo-positioned-button"

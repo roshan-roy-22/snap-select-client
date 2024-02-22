@@ -134,13 +134,15 @@ const Notification = () => {
                 </Tabs>
               </Box>
               <CustomTabPanel value={value} index={0}>
-                <div onClick={() => markallRead()} className="flex justify-end">
-                  Mark all as seen
-                </div>
+               <div className="flex justify-end mb-4">
+                 <button onClick={() => markallRead()} className="bg-blue-400 px-3 py-2 rounded-md text-white">
+                   Mark all as seen
+                 </button>
+               </div>
                 {user?.unseenNotification.map((notification) => (
                   <div
                     onClick={() => navigate(notification.onClickPath)}
-                    className="p-2 cursor-pointer "
+                    className=" p-2 cursor-pointer "
                   >
                     <div className=" mb-2">{notification.message}</div>
                     <Divider />
@@ -148,7 +150,9 @@ const Notification = () => {
                 ))}
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
-                <div onClick={()=>deleteNotification()} className="flex justify-end">Delete all notification</div>
+               <div className="flex justify-end">
+                 <button onClick={()=>deleteNotification()} className="bg-red-500 px-3 py-2 rounded-md text-white">Delete all notification</button>
+               </div>
                 {user?.seenNotifation.map((notification)=>(
                   <div
                   onClick={() => navigate(notification.onClickPath)}

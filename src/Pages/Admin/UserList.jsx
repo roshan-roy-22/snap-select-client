@@ -41,9 +41,9 @@ const UserList = () => {
   console.log(userData);
 
   return (
-    <div>
+    <div  className="bg-[#F8F9FA] pb-6">
       <Navbar />
-      <div className="grid grid-cols-6">
+      <div className="grid grid-cols-6 h-[90vh]">
         <div></div>
         <div className="col-span-4">
             <h1 className="text-3xl font-medium m-3">User list</h1>
