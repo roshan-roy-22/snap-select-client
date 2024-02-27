@@ -66,11 +66,11 @@ const VendorBookings = () => {
   }, []);
 
   return (
-    <div  className="bg-[#F8F9FA] pb-7">
+    <div  className="bg-[#F8F9FA] ">
       <Navbar />
-      <div className="grid grid-cols-6 h-[90vh]">
+      <div className="grid grid-cols-6 max-md:px-4 h-[60vh]">
         <div></div>
-        <div className="col-span-4">
+        <div className="col-span-4 max-md:col-span-6">
           <h1 className="text-3xl m-3 font-semibold">Bookings</h1>
           <TableContainer component={Paper}>
             <Table className="w-full">

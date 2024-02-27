@@ -18,7 +18,7 @@ const HomeCard = ({ vendor }) => {
           />
         </div>
         <div class="p-6">
-          <h1 className="text-2xl mb-1 font-medium">{vendor.name}</h1>
+          <h1 className="text-xl mb-1 font-medium">{vendor.name}</h1>
           <div className="items-center justify-center">
             <PlaceIcon />
             <span className="text-gray-400">

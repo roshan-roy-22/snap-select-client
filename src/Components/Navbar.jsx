@@ -25,7 +25,7 @@ const Navbar = () => {
   const userMenu =[
     {
       name:'Home',
-      path:'/'
+      path:'/home'
     },
     {
       name:'Bookings',
@@ -40,11 +40,15 @@ const Navbar = () => {
   const vendorMenu=[
     {
       name:'Home',
-      path:'/'
+      path:'/home'
     },
     {
       name:'Bookings',
       path:'/vendor/bookings'
+    },
+    {
+      name:'Your Bookings',
+      path:'/bookings'
     },
     {
       name:'Profile',
@@ -55,7 +59,7 @@ const Navbar = () => {
   const adminMenu =[
     {
       name:'Home',
-      path:'/'
+      path:'/home'
     },
     {
       name:'Users',

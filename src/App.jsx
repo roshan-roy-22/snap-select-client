@@ -38,7 +38,7 @@ function App() {
         </div>
       )}
       <Routes>
-        <Route path="/home" element={<PublicRoute>
+        <Route path="/" element={<PublicRoute>
           <Landing/>
         </PublicRoute>} />
         <Route
@@ -58,7 +58,7 @@ function App() {
           }
         />
         <Route
-          path="/"
+          path="/home"
           element={
             <ProtectedRoute>
               <Home />

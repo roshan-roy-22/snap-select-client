@@ -12,7 +12,7 @@ import { hideLoading, showLoading } from "../Redux/alertSlice";
 
 
 const Register = () => {
- 
+//  const navigate=useNavigate()
   const dispatch = useDispatch();
   const [userData, setUserdata] = useState({
     username: "",
@@ -77,8 +77,9 @@ const navigate=useNavigate('/');
           style={{ zIndex: 1 }}
         >
           <img
+          onClick={()=>navigate('/')}
             style={{ height: "8rem", width: "10rem" }}
-            className=""
+            className="cursor-pointer"
             src={logo}
             alt=""
           />

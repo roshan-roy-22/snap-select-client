@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+*{
+  font-family: "Roboto Slab", serif;
+}
+
 .wrapper {
     /* width: 420px; */
     background: transparent;

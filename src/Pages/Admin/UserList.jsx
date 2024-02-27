@@ -43,19 +43,19 @@ const UserList = () => {
   return (
     <div  className="bg-[#F8F9FA] pb-6">
       <Navbar />
-      <div className="grid grid-cols-6 h-[90vh]">
+      <div className="grid grid-cols-6  max-md:px-3">
         <div></div>
-        <div className="col-span-4">
+        <div className="col-span-4 max-md:col-span-6">
             <h1 className="text-3xl font-medium m-3">User list</h1>
             <TableContainer component={Paper}>
-                <Table  className="w-full">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Sl.no</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Created at</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Action</TableCell>
+                <Table  sx={{fontFamily:'cursive'}} className="w-full">
+                    <TableHead >
+                        <TableRow sx={{fontFamily:'cursive'}} >
+                            <TableCell sx={{fontWeight:'bolder'}} >Sl.no</TableCell>
+                            <TableCell sx={{fontWeight:'bolder'}} >Name</TableCell>
+                            <TableCell sx={{fontWeight:'bolder'}} >Created at</TableCell>
+                            <TableCell sx={{fontWeight:'bolder'}} >Email</TableCell>
+                            <TableCell sx={{fontWeight:'bolder'}} >Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

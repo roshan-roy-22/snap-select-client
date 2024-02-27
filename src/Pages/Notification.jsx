@@ -116,9 +116,9 @@ const Notification = () => {
     <div className="bg-[#F8F9FA]">
       <Navbar />
       <div className="h-[90vh]">
-        <div className="grid grid-cols-4 mt-3  ">
+        <div className="grid grid-cols-4 max-md:px-3  mt-3  ">
           <div></div>
-          <div className="col-span-2 bg-white px-3 rounded-md shadow-xl ">
+          <div className="col-span-2 max-md:col-span-4 bg-white px-3 rounded-md shadow-xl ">
             <h1 className="text-3xl text-blue-500 font-medium m-4">
               Notification
             </h1>

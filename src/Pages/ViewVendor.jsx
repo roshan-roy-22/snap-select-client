@@ -3,7 +3,7 @@ import Navbar from "../Components/Navbar";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { hideLoading, showLoading } from "../Redux/alertSlice";
-import { bookAPI, viewVendorAPI } from "../Services/allAPI";
+import { bookAPI, userinfoAPI, viewVendorAPI } from "../Services/allAPI";
 import { SERVER_URL } from "../Services/serverURL";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import PlaceIcon from "@mui/icons-material/Place";
@@ -12,6 +12,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ToastContainer, toast } from "react-toastify";
 import '../index.css'
+
 const ViewVendor = () => {
   const settings = {
     dots: true,
@@ -49,80 +50,89 @@ const ViewVendor = () => {
       }
     ]
   };
-  const [vendors, setVendors] = useState({});
 
   const { user } = useSelector((state) => state.user);
+  const [vendors, setVendors] = useState({});
+  const [isSameVendor, setIsSameVendor] = useState(true);
+  const [userDetails, setUserDetails] = useState(null);
   const dispatch = useDispatch();
 
-  const getVendor = async () => {
+  const { photographer_id } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        dispatch(showLoading());
+        const token = localStorage.getItem("token");
+        if (token) {
+          const reqHeader = {
+            Authorization: `Bearer ${token}`,
+          };
+
+          const [vendorResponse, userResponse] = await Promise.all([
+            viewVendorAPI({ photographer_id }, reqHeader),
+            userinfoAPI(reqHeader)
+          ]);
+
+          dispatch(hideLoading());
+
+          if (vendorResponse.data.success) {
+            setVendors(vendorResponse.data.data);
+          }
+
+          if (userResponse.data.success) {
+            setUserDetails(userResponse.data.data);
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, [photographer_id, dispatch]);
+
+  useEffect(() => {
+    if (userDetails && vendors && user && userDetails._id === vendors.userId) {
+      setIsSameVendor(false);
+    }
+  }, [userDetails, vendors, user]);
+
+  const bookVendor = async () => {
     try {
       dispatch(showLoading());
       const token = localStorage.getItem("token");
-      console.log(token);
       if (token) {
         const reqHeader = {
           Authorization: `Bearer ${token}`,
         };
-
         const reqBody = {
-          photographer_id,
+          userId: user ? user._id : null,
+          photographerId: vendors ? vendors._id : null,
+          vendorInfo: vendors,
+          userInfo: user
         };
-
-        const response = await viewVendorAPI(reqBody, reqHeader);
+        const response = await bookAPI(reqBody, reqHeader);
         dispatch(hideLoading());
         if (response.data.success) {
-          setVendors(response.data.data);
+          toast.success(response.data.message);
         }
       }
     } catch (error) {
+      dispatch(hideLoading());
+      toast.error("Error while booking");
       console.log(error);
     }
   };
-  useEffect(() => {
-    getVendor();
-  }, []);
-
-  const bookVendor=async()=>{
-    try {
-      dispatch(showLoading());
-      const token = localStorage.getItem("token")
-      if(token){
-        const reqHeader = {
-          Authorization: `Bearer ${token}`,
-        };
-        const reqBody={
-          userId:user._id,
-          photographerId:vendors._id,
-          vendorInfo:vendors,
-          userInfo:user
-        }
-        const response = await bookAPI(reqBody,reqHeader)
-        dispatch(hideLoading())
-        if(response.data.success){
-          toast.success(response.data.message)
-        }
-      }
-    } catch (error) {
-      dispatch(hideLoading())
-      toast.error("Error while booking")
-      console.log(error);
-    }
-  }
-
-  console.log(vendors);
-  console.log(user);
-  const { photographer_id } = useParams();
-
-
 
   return (
-    <div  className="bg-[#F8F9FA]">
+    <div className="bg-[#F8F9FA]">
       <Navbar />
-      <div >
+      <div>
         <div className="px-6">
-          <div className="grid grid-cols-2 mt-7">
+          <div className="grid grid-cols-2 max-md:grid-cols-1 mt-7">
             <div>
-              <div className=" w-10/12 mx-auto ">
+              <div className="w-10/12 mx-auto">
                 {vendors.coverImage && vendors.coverImage.length > 0 && (
                   <img
                     className="rounded-lg"
@@ -166,21 +176,20 @@ const ViewVendor = () => {
             <Slider {...settings}>
               {vendors.photos &&
                 vendors.photos.map((photo, index) => (
-                  <div  className="h-[300px] w-[350px] space-x-3   object-fill mt-7">
-                    <img className="object-contain mx-4"
-                    key={index}
-                    src={`${SERVER_URL}/uploads/${photo.filename}`}
-                    alt=""
-                  />
+                  <div className="h-[300px] w-[350px] space-x-3   object-fill mt-7" key={index}>
+                    <img
+                      className="object-contain mx-4"
+                      src={`${SERVER_URL}/uploads/${photo.filename}`}
+                      alt=""
+                    />
                   </div>
                 ))}
             </Slider>
           </div>
-          <div className="text-center" >
-          <button className="my-7 book" onClick={bookVendor}  >Request Booking</button>
+          <div className="text-center">
+            {isSameVendor && <button className="my-7 book" onClick={bookVendor}>Request Booking</button>}
           </div>
         </div>
-         
       </div>
       <ToastContainer autoClose={2000} position="top-center" />
     </div>

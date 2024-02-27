@@ -1,8 +1,10 @@
 import React from "react";
 import logo from "../assets/images/logo-icon.png";
 import Footer from "../Components/Footer";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
+  const navigate=useNavigate();
   return (
     <>
       <div className="flex justify-between items-center py-4 px-10 border-b-2 bg-white">
@@ -11,7 +13,7 @@ const Landing = () => {
           <span className="font-bold text-xl">SNAP SELECT</span>
         </div>
         <div>
-          <button className="bg-blue-500 px-3 py-2 rounded-lg text-white">
+          <button onClick={()=>navigate('/login')} className="bg-blue-500 px-3 py-2 rounded-lg text-white">
             Get Started
           </button>
         </div>

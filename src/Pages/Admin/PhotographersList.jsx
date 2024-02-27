@@ -18,6 +18,7 @@ import Modal from '@mui/material/Modal';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { SERVER_URL } from "../../Services/serverURL";
+import { ToastContainer, toast } from "react-toastify";
 
 
 const style = {
@@ -94,7 +95,7 @@ const PhotographersList = () => {
 
         // Check if response is defined and has data property
         if (response && response.data && response.data.success) {
-          alert(response.data.message);
+          toast.success(response.data.message);
           getUserData();
         } else {
           // Handle error scenario where response or response.data is undefined
@@ -112,9 +113,9 @@ const PhotographersList = () => {
   return (
     <div  className="bg-[#F8F9FA] pb-6">
       <Navbar />
-      <div className="grid grid-cols-6 h-[90vh]">
+      <div className="grid grid-cols-6 max-md:px-3 ">
         <div></div>
-        <div className="col-span-4">
+        <div className="col-span-4 max-md:col-span-6">
           <h1 className="text-3xl font-medium m-3">Vendor's list</h1>
           <TableContainer component={Paper}>
             <Table className="w-full">
@@ -185,6 +186,7 @@ const PhotographersList = () => {
       </Modal>
         </div>
       </div>
+      <ToastContainer autoClose={2000} position="top-center" />
     </div>
   );
 };

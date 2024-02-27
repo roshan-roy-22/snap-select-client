@@ -51,7 +51,7 @@ const Login = () => {
       dispatch(hideLoading())
       console.error("Error occurred while logging in:", error);
       toast.error(
-        "An error occurred while logging in. Please try again later."
+        "Invalid Credentials"
       );
     }
   };

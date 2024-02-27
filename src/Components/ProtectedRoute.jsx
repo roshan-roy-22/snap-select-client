@@ -15,7 +15,7 @@ const ProtectedRoute = (props) => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-      navigate("/login");
+      navigate("/");
       return;
     }
 
@@ -30,13 +30,13 @@ const ProtectedRoute = (props) => {
         dispatch(setUser(result.data.data));
       } else {
           localStorage.clear();
-        navigate("/login");
+        navigate("/");
       }
     } catch (error) {
       console.error("Error fetching user info:", error);
       dispatch(hideLoading());
       localStorage.clear();
-      navigate("/login");
+      navigate("/");
     }
   };
   useEffect(() => {
@@ -50,7 +50,7 @@ const ProtectedRoute = (props) => {
   if (localStorage.getItem("token")) {
     return props.children;
   } else {
-    return <Navigate to={"/login"} />;
+    return <Navigate to={"/"} />;
   }
 };
 
