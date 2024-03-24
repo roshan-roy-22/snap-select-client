@@ -7,7 +7,7 @@ const Landing = () => {
   const navigate=useNavigate();
   return (
     <>
-      <div className="flex justify-between items-center py-4 px-10 border-b-2 bg-white">
+      <div className="flex justify-between items-center py-4 px-10 max-sm:px-3 border-b-2 bg-white">
         <div className="flex items-center">
           <img width={"45px"} src={logo} alt="" />
           <span className="font-bold text-xl">SNAP SELECT</span>
@@ -18,13 +18,13 @@ const Landing = () => {
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-2 px-10 bg-[#F8F9FA]">
-        <div className=" p-10">
-          <h1 className="text-3xl font-bold my-5">
+      <div className="grid grid-cols-2 max-md:grid-cols-1 max-md:px-2 px-10 bg-[#F8F9FA]">
+        <div className=" p-10 max-md:p-4">
+          <h1 className="text-3xl max-md:text-xl font-bold my-5">
             Unleash the magic of your moments through our extensive network of
             skilled photographers.{" "}
           </h1>
-          <p className="text-xl">
+          <p className="text-xl max-md:text-sm">
             {" "}
             Discover skilled photographers specializing in weddings, portraits,
             events, landscapes, and commercial projects. With portfolios ensure
@@ -41,8 +41,8 @@ const Landing = () => {
         </div>
       </div>
       <div className=" mx-auto bg-[#F8F9FA]">
-        <div className="text-center mb-4 px-24 ">
-          <h1 className="text-5xl font-medium">
+        <div className="text-center mb-4 px-24 max-md:px-6 ">
+          <h1 className="text-5xl max-md:text-3xl font-medium">
             Capture all of life's milestones – and everything in between.
           </h1>
           <p className="text-2xl mb-5 font-thin">
@@ -112,11 +112,11 @@ const Landing = () => {
         </section>
       </div>
       <section className="grid place-items-center text-center ">
-        <div className="w-[65%] bg-blue-50 py-28 px-14 my-9 rounded-3xl">
-          <h1 className="text-4xl my-4 font-semibold">
+        <div className="w-[65%] bg-blue-50 py-28 max-md:px-2 max-md:w-[80%] px-14 my-9 rounded-3xl">
+          <h1 className="text-4xl max-md:text-2xl my-4 font-semibold">
             Experience a seamless and enjoyable journey with us
           </h1>
-          <p className="text-2xl mb-4">
+          <p className="text-2xl max-md:text-xl mb-4">
             Our amiable team at IN-FOCUS Photography ensures a stress-free and
             enjoyable process from beginning to end.
           </p>

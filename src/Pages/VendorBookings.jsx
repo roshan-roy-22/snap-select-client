@@ -11,10 +11,41 @@ import Paper from "@mui/material/Paper";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../Redux/alertSlice";
 import { ToastContainer, toast } from "react-toastify";
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 2,
+};
 
 const VendorBookings = () => {
   const [bookings, setBookings] = useState([]);
   const dispatch = useDispatch();
+  const [bookingsData,SetBookingData]=useState(null)
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = (data) =>{
+    setOpen(true);
+    SetBookingData(data)
+    // console.log(data);
+  }
+  const handleClose = () => {
+    setOpen(false);
+    console.log(bookingsData);
+    
+  }
+
+
   const vendorBookings = async () => {
     try {
       dispatch(showLoading());
@@ -78,6 +109,7 @@ const VendorBookings = () => {
                 <TableRow>
                   <TableCell>Sl.no</TableCell>
                   <TableCell>Custumer Name</TableCell>
+                  <TableCell>Details</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
@@ -87,6 +119,7 @@ const VendorBookings = () => {
                   <TableRow key={key}>
                     <TableCell>{key + 1}</TableCell>
                     <TableCell>{item.userInfo.username}</TableCell>
+                    <TableCell onClick={()=>handleOpen(item.bookingInfo)} className="cursor-pointer"><InfoOutlinedIcon/>View Details</TableCell>
                     <TableCell>{item.status}</TableCell>
                     <TableCell>
                       <div className="flex gap-3 items-center">
@@ -122,6 +155,22 @@ const VendorBookings = () => {
         <div></div>
       </div>
       <ToastContainer autoClose={2000} position="top-center" />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+         <h1 className="text-center text-2xl mb-2 font-bold text-blue-500">Booking Details</h1>
+         <h2 className="mb-3">Customer Name:{bookingsData?.name}</h2>
+         <h2 className="mb-3">{bookingsData?.phoneNumber}</h2>
+         <h2 className="mb-3">Date: {bookingsData?.date ? new Date(bookingsData.date).toLocaleDateString('en-US', { timeZone: 'Asia/Kolkata' }) : ''}</h2>
+         <h2 className="mb-3">City:{bookingsData?.city}</h2>
+         <h2 className="mb-3">State:{bookingsData?.state}</h2>
+         <h2 className="mb-3">Message:{bookingsData?.message}</h2>
+        </Box>
+      </Modal>
     </div>
   );
 };

@@ -11,7 +11,27 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ToastContainer, toast } from "react-toastify";
-import '../index.css'
+import "../index.css";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+// import DatePicker from "react-datepicker";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  maxWidth: 700,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 const ViewVendor = () => {
   const settings = {
@@ -30,34 +50,47 @@ const ViewVendor = () => {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true
-        }
+          dots: true,
+        },
       },
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
-          initialSlide: 2
-        }
+          initialSlide: 2,
+        },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
+
+  const [bookDetails, setBookDetails] = useState({
+    name: "",
+    city: "",
+    state: "",
+    date:new Date(),
+    phoneNumber:null,
+    message:""
+  });
 
   const { user } = useSelector((state) => state.user);
   const [vendors, setVendors] = useState({});
   const [isSameVendor, setIsSameVendor] = useState(true);
   const [userDetails, setUserDetails] = useState(null);
   const dispatch = useDispatch();
+  const [startDate, setStartDate] = useState(new Date());
 
   const { photographer_id } = useParams();
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,7 +104,7 @@ const ViewVendor = () => {
 
           const [vendorResponse, userResponse] = await Promise.all([
             viewVendorAPI({ photographer_id }, reqHeader),
-            userinfoAPI(reqHeader)
+            userinfoAPI(reqHeader),
           ]);
 
           dispatch(hideLoading());
@@ -99,6 +132,11 @@ const ViewVendor = () => {
   }, [userDetails, vendors, user]);
 
   const bookVendor = async () => {
+    const {name,city,state,date,phoneNumber,message}=bookDetails
+
+    if(!name || !city || !state || !date || !phoneNumber || !message){
+      return alert("Please fill the form")
+    }
     try {
       dispatch(showLoading());
       const token = localStorage.getItem("token");
@@ -110,12 +148,14 @@ const ViewVendor = () => {
           userId: user ? user._id : null,
           photographerId: vendors ? vendors._id : null,
           vendorInfo: vendors,
-          userInfo: user
+          userInfo: user,
+          bookingInfo:bookDetails
         };
         const response = await bookAPI(reqBody, reqHeader);
         dispatch(hideLoading());
         if (response.data.success) {
           toast.success(response.data.message);
+          handleClose();
         }
       }
     } catch (error) {
@@ -124,6 +164,17 @@ const ViewVendor = () => {
       console.log(error);
     }
   };
+
+  const isFutureDate = (date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date >= today;
+  };
+
+
+  const handleBooking = ()=>{
+    console.log(bookDetails);
+  }
 
   return (
     <div className="bg-[#F8F9FA]">
@@ -176,7 +227,10 @@ const ViewVendor = () => {
             <Slider {...settings}>
               {vendors.photos &&
                 vendors.photos.map((photo, index) => (
-                  <div className="h-[300px] w-[350px] space-x-3   object-fill mt-7" key={index}>
+                  <div
+                    className="h-[300px] w-[350px] space-x-3   object-fill mt-7"
+                    key={index}
+                  >
                     <img
                       className="object-contain mx-4"
                       src={`${SERVER_URL}/uploads/${photo.filename}`}
@@ -187,11 +241,86 @@ const ViewVendor = () => {
             </Slider>
           </div>
           <div className="text-center">
-            {isSameVendor && <button className="my-7 book" onClick={bookVendor}>Request Booking</button>}
+            {isSameVendor && (
+              <button className="my-7 book" onClick={handleOpen}>
+                Request Booking
+              </button>
+            )}
           </div>
         </div>
       </div>
       <ToastContainer autoClose={2000} position="top-center" />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box className="w-11/12" sx={style}>
+          <h2 className="text-center text-blue-600  font-bold text-2xl">
+            Request Booking
+          </h2>
+          <h1 className="text-xl font-bold">{vendors.name}</h1>
+          <p className="text-gray-500 mb-3">
+            Fill this form and {vendors.name} will contact you shortly. All the
+            information provided will be treated confidentially.
+          </p>
+          <TextField
+            sx={{ width: "100%", marginBottom: "10px" }}
+            id="standard-basic"
+            label="Name"
+            variant="standard"
+            onChange={(e)=>setBookDetails({ ...bookDetails, name: e.target.value })}
+          />
+          <div className="flex gap-3 mb-3">
+            <TextField
+              sx={{ width: "100%" }}
+              id="standard-basic"
+              label="City"
+              variant="standard"
+            onChange={(e)=>setBookDetails({ ...bookDetails, city: e.target.value })}
+            />
+            <TextField
+              sx={{ width: "100%" }}
+              id="standard-basic"
+              label="State"
+              variant="standard"
+            onChange={(e)=>setBookDetails({ ...bookDetails, state: e.target.value })}
+            />
+          </div>
+          <div className="flex gap-3 mb-3 items-center">
+            {/* <input className="w-full p-3 border rounded-md" type="date" /> */}
+            <DatePicker
+            className="border  p-3 w-fit cursor-pointer" 
+              selected={bookDetails.date}
+              // onChange={(date) => setStartDate(date)}
+              minDate={new Date()}
+              filterDate={isFutureDate}
+              onChange={(date) => setBookDetails({ ...bookDetails, date: date })}
+            />
+            <TextField
+              sx={{ width: "100%" }}
+              id="outlined-number"
+              onChange={(e)=>setBookDetails({...bookDetails,phoneNumber:e.target.value})}
+              label="Number"
+              type="number"
+              variant="standard"
+            />
+          </div>
+          <TextField
+            sx={{ width: "100%" }}
+            id="standard-basic"
+            label="Message"
+            variant="standard"
+            onChange={(e)=>setBookDetails({...bookDetails,message:e.target.value})}
+            maxRows={8}
+            multiline
+          />
+          <button onClick={bookVendor} className="w-full py-2 bg-blue-500 my-2 rounded-lg text-white">
+            Send{" "}
+          </button>
+        </Box>
+      </Modal>
     </div>
   );
 };

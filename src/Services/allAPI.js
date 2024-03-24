@@ -65,3 +65,7 @@ export const vendorBookingsAPI = async (reqHeader)=>{
 export const changeBookingStatusAPI = async (reqBody,reqHeader)=>{
     return await commonAPI("POST",`${SERVER_URL}/change-bookings-status`,reqBody,reqHeader)
 }
+
+export const getPhotographersDetails = async (reqHeader)=>{
+    return await commonAPI("GET",`${SERVER_URL}/edit-vendor-profile`,"",reqHeader)
+}
